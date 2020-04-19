@@ -5,26 +5,31 @@ import { Portal, FAB } from 'react-native-paper';
 
 import { Container } from '../components/Container';
 import { CardsItem } from '../components/CardsItem';
+import { CardsModal } from '../components/CardsModal';
 
 export const Cards = ({ navigation, route }) => {
   const [fabOpen, setFABOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
   const { deckName } = route.params;
   const questions = useSelector((state) => state[deckName].questions);
 
   const onStateChange = ({ open }) => setFABOpen(open);
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
 
   return (
     <Container>
       <FlatList
         data={questions}
         renderItem={({ item }) => <CardsItem question={item.question} />}
-        keyExtractor={(item) => item.question}
+        keyExtractor={(item) => item.uuid}
         style={styles.list}
         contentContainerStyle={styles.listContainer}
         horizontal={false}
         numColumns={2}
       />
       <Portal>
+        <CardsModal visible={visible} hideModal={hideModal} deck={deckName} />
         <FAB.Group
           open={fabOpen}
           icon={fabOpen ? 'close' : 'cards-outline'}
@@ -39,7 +44,7 @@ export const Cards = ({ navigation, route }) => {
             {
               icon: 'plus',
               label: 'Add Card',
-              onPress: () => console.log('Pressed add'),
+              onPress: showModal,
             },
           ]}
           onStateChange={onStateChange}
@@ -74,6 +79,9 @@ const styles = StyleSheet.create({
   },
   fab: {
     marginTop: 8,
+
+    color: 'white',
+    backgroundColor: 'black',
 
     elevation: 20,
   },
