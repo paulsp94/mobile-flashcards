@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Paragraph } from 'react-native-paper';
+import { Card, Title } from 'react-native-paper';
 import { StyleSheet, View } from 'react-native';
 
 export const CardsItem = ({ question }) => {
@@ -7,7 +7,7 @@ export const CardsItem = ({ question }) => {
     <View style={styles.cardWrapper}>
       <Card style={styles.card}>
         <Card.Content>
-          <Paragraph>{question}</Paragraph>
+          <Title>{question}</Title>
         </Card.Content>
       </Card>
     </View>
@@ -18,9 +18,11 @@ const styles = StyleSheet.create({
   cardWrapper: {
     flexGrow: 0.5,
     flexBasis: 0.5,
+    flexShrink: 0,
+    aspectRatio: 0.8,
   },
   card: {
-    height: 200,
+    flex: 1,
     margin: 8,
 
     elevation: 10,
