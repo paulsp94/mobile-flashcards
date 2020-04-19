@@ -35,7 +35,7 @@ export default class App extends Component {
                   name="Quiz"
                   component={Quiz}
                   options={({ route }) => ({
-                    title: `${route.params.deckName} (${route.params.cards})`,
+                    title: `${route.params.deckName} Quiz`,
                   })}
                 />
               </Stack.Navigator>
