@@ -1,21 +1,10 @@
 import React, { useState } from 'react';
-import { Modal, Card, TextInput, Button } from 'react-native-paper';
+import { Modal, Card, TextInput } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import { addQuestion } from '../actions';
-
-const ActionButton = ({ children, onPress, mode }) => (
-  <Button
-    mode={mode}
-    contentStyle={styles.buttonContent}
-    labelStyle={styles.buttonLabel}
-    style={styles.button}
-    uppercase={false}
-    onPress={onPress}>
-    {children}
-  </Button>
-);
+import { ModalButton } from './ModalButton';
 
 const ModalInput = ({ value, setValue, label }) => (
   <TextInput
@@ -57,12 +46,12 @@ export const CardsModal = ({ visible, hideModal, deck }) => {
           <ModalInput value={answer} setValue={setAnswer} label="Answer" />
         </Card.Content>
         <Card.Actions style={styles.cardActions}>
-          <ActionButton onPress={hideModal} mode="text">
+          <ModalButton onPress={hideModal} mode="text">
             Cancel
-          </ActionButton>
-          <ActionButton onPress={handleCreate} mode="contained">
+          </ModalButton>
+          <ModalButton onPress={handleCreate} mode="contained">
             Create
-          </ActionButton>
+          </ModalButton>
         </Card.Actions>
       </Card>
     </Modal>
@@ -78,8 +67,5 @@ const styles = StyleSheet.create({
 
     elevation: 10,
   },
-  button: { marginLeft: 4 },
-  buttonLabel: { letterSpacing: 0 },
-  buttonContent: { paddingHorizontal: 16, height: 36 },
   cardActions: { justifyContent: 'flex-end', padding: 16 },
 });

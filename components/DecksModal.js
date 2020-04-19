@@ -1,21 +1,10 @@
 import React from 'react';
-import { Modal, Card, TextInput, Button } from 'react-native-paper';
+import { Modal, Card, TextInput } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { addDeckTitle, editDeckTitle } from '../actions';
-
-const CustomButton = ({ children, onPress, mode }) => (
-  <Button
-    mode={mode}
-    contentStyle={styles.buttonContent}
-    labelStyle={styles.buttonLabel}
-    style={styles.button}
-    uppercase={false}
-    onPress={onPress}>
-    {children}
-  </Button>
-);
+import { ModalButton } from './ModalButton';
 
 export const DecksModal = ({ visible, hideModal, title, setTitle, editing }) => {
   const deckNames = useSelector((state) =>
@@ -60,12 +49,12 @@ export const DecksModal = ({ visible, hideModal, title, setTitle, editing }) => 
           />
         </Card.Content>
         <Card.Actions style={styles.cardActions}>
-          <CustomButton onPress={hideModal} mode="text">
+          <ModalButton onPress={hideModal} mode="text">
             Cancel
-          </CustomButton>
-          <CustomButton onPress={handleCreate} mode="contained">
+          </ModalButton>
+          <ModalButton onPress={handleCreate} mode="contained">
             Create
-          </CustomButton>
+          </ModalButton>
         </Card.Actions>
       </Card>
     </Modal>
@@ -81,8 +70,5 @@ const styles = StyleSheet.create({
 
     elevation: 10,
   },
-  button: { marginLeft: 4 },
-  buttonLabel: { letterSpacing: 0 },
-  buttonContent: { paddingHorizontal: 16, height: 36 },
   cardActions: { justifyContent: 'flex-end', padding: 16 },
 });
