@@ -1,62 +1,24 @@
 import React, { useState } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
 import { Portal, FAB } from 'react-native-paper';
 
 import { Container } from '../components/Container';
-import { CustomAppbar } from '../components/CustomAppbar';
 import { CardsItem } from '../components/CardsItem';
 
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    question: 'First Item',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    question: 'Second Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    question: 'Third Item',
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba2',
-    question: 'First Item',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f632',
-    question: 'Second Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d722',
-    question: 'Third Item',
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba3',
-    question: 'First Item',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f633',
-    question: 'Second Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d723',
-    question: 'Third Item',
-  },
-];
-
-export const Cards = ({ navigation, deckName }) => {
+export const Cards = ({ navigation, route }) => {
   const [fabOpen, setFABOpen] = useState(false);
+  const { deckName } = route.params;
+  const questions = useSelector((state) => state[deckName].questions);
 
   const onStateChange = ({ open }) => setFABOpen(open);
 
   return (
     <Container>
-      <CustomAppbar title={deckName} />
       <FlatList
-        data={DATA}
+        data={questions}
         renderItem={({ item }) => <CardsItem question={item.question} />}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.question}
         style={styles.list}
         contentContainerStyle={styles.listContainer}
         horizontal={false}
@@ -66,10 +28,19 @@ export const Cards = ({ navigation, deckName }) => {
         <FAB.Group
           open={fabOpen}
           icon={fabOpen ? 'close' : 'cards-outline'}
-          style={styles.fab}
+          style={styles.fabGroup}
+          fabStyle={styles.fab}
           actions={[
-            { icon: 'brain', label: 'Start Quiz', onPress: () => console.log('Pressed brain') },
-            { icon: 'plus', label: 'Add Card', onPress: () => console.log('Pressed add') },
+            {
+              icon: 'brain',
+              label: 'Start Quiz',
+              onPress: () => console.log('Pressed brain'),
+            },
+            {
+              icon: 'plus',
+              label: 'Add Card',
+              onPress: () => console.log('Pressed add'),
+            },
           ]}
           onStateChange={onStateChange}
           onPress={() => {
@@ -85,15 +56,25 @@ export const Cards = ({ navigation, deckName }) => {
 
 const styles = StyleSheet.create({
   list: {
-    marginTop: -16,
-    paddingTop: 16,
-    marginLeft: 8,
-    marginRight: 8,
+    paddingTop: 8,
+    paddingLeft: 8,
+    paddingRight: 8,
+    backgroundColor: 'white',
   },
   listContainer: {
+    justifyContent: 'center',
+    alignContent: 'center',
     paddingBottom: 100,
   },
+  fabGroup: {
+    position: 'absolute',
+    padding: 8,
+    right: 0,
+    bottom: 0,
+  },
   fab: {
-    elevation: 10,
+    marginTop: 8,
+
+    elevation: 20,
   },
 });
