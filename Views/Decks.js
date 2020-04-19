@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 import { FAB, Portal } from 'react-native-paper';
 import { useSelector } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
 
 import { Container } from '../components/Container';
 import { DecksItem } from '../components/DecksItem';
@@ -11,6 +12,7 @@ export const Decks = ({ navigation }) => {
   const [newDeckTitle, setNewDeckTitle] = useState('');
   const [editing, setEditing] = useState('');
   const [visible, setVisible] = useState(false);
+  const isFocused = useIsFocused();
   const decks = useSelector((state) =>
     Object.values(state)
       .slice(0, -1)
@@ -53,7 +55,7 @@ export const Decks = ({ navigation }) => {
           editing={editing}
           hideModal={hideModal}
         />
-        <FAB style={styles.fab} icon="plus" onPress={showModal} />
+        <FAB style={styles.fab} icon="plus" onPress={showModal} visible={isFocused} />
       </Portal>
     </Container>
   );

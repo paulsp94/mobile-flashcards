@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Portal, FAB } from 'react-native-paper';
+import { useIsFocused } from '@react-navigation/native';
 
 import { Container } from '../components/Container';
 import { CardsItem } from '../components/CardsItem';
@@ -10,12 +11,14 @@ import { CardsModal } from '../components/CardsModal';
 export const Cards = ({ navigation, route }) => {
   const [fabOpen, setFABOpen] = useState(false);
   const [visible, setVisible] = useState(false);
+  const isFocused = useIsFocused();
   const { deckName } = route.params;
   const questions = useSelector((state) => state[deckName].questions);
 
   const onStateChange = ({ open }) => setFABOpen(open);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
+  const startQuiz = () => navigation.navigate('Quiz', { deckName });
 
   return (
     <Container>
@@ -33,13 +36,14 @@ export const Cards = ({ navigation, route }) => {
         <FAB.Group
           open={fabOpen}
           icon={fabOpen ? 'close' : 'cards-outline'}
+          visible={isFocused}
           style={styles.fabGroup}
           fabStyle={styles.fab}
           actions={[
             {
               icon: 'brain',
               label: 'Start Quiz',
-              onPress: () => console.log('Pressed brain'),
+              onPress: startQuiz,
             },
             {
               icon: 'plus',
