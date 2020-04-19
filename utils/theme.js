@@ -26,8 +26,8 @@ export const theme = {
   roundness: 8,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#FFF',
-    accent: '#000',
+    primary: '#000',
+    accent: '#FFF',
   },
   fonts: configureFonts(fontConfig),
 };
