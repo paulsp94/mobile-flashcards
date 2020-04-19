@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { Provider as PaperProvider, DefaultTheme, configureFonts } from 'react-native-paper';
 import { Provider as StoreProvider } from 'react-redux';
 import { createStore } from 'redux';
@@ -40,25 +41,21 @@ const theme = {
   fonts: configureFonts(fontConfig),
 };
 
+const Stack = createStackNavigator();
+
 export default class App extends Component {
   render() {
     return (
       <StoreProvider store={createStore(reducer)}>
         <PaperProvider theme={theme}>
-          <View style={styles.container}>
-            <Cards />
-          </View>
+          <NavigationContainer>
+            <Stack.Navigator headerMode="none">
+              <Stack.Screen name="Decks" component={Decks} />
+              <Stack.Screen name="Cards" component={Cards} />
+            </Stack.Navigator>
+          </NavigationContainer>
         </PaperProvider>
       </StoreProvider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
