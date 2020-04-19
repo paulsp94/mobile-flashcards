@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import { FlatList, StyleSheet } from 'react-native';
 import { Portal, FAB } from 'react-native-paper';
 
 import { Container } from '../components/Container';
 import { CustomAppbar } from '../components/CustomAppbar';
 import { CardsItem } from '../components/CardsItem';
-import { FlatList, StyleSheet } from 'react-native';
 
 const DATA = [
   {
@@ -45,7 +45,7 @@ const DATA = [
   },
 ];
 
-export const Cards = ({ deckName }) => {
+export const Cards = ({ navigation, deckName }) => {
   const [fabOpen, setFABOpen] = useState(false);
 
   const onStateChange = ({ open }) => setFABOpen(open);
@@ -65,7 +65,8 @@ export const Cards = ({ deckName }) => {
       <Portal>
         <FAB.Group
           open={fabOpen}
-          icon={fabOpen ? 'close' : 'cards'}
+          icon={fabOpen ? 'close' : 'cards-outline'}
+          style={styles.fab}
           actions={[
             { icon: 'brain', label: 'Start Quiz', onPress: () => console.log('Pressed brain') },
             { icon: 'plus', label: 'Add Card', onPress: () => console.log('Pressed add') },
@@ -91,5 +92,8 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     paddingBottom: 100,
+  },
+  fab: {
+    elevation: 10,
   },
 });
