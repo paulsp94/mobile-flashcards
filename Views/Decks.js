@@ -1,23 +1,25 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { FlatList, StyleSheet } from 'react-native';
 import { FAB } from 'react-native-paper';
+import { useSelector } from 'react-redux';
 
 import { Container } from '../components/Container';
 import { DecksItem } from '../components/DecksItem';
-import { CustomAppbar } from '../components/CustomAppbar';
 
 export const Decks = ({ navigation }) => {
   const decks = useSelector((state) =>
     Object.values(state).map((deck) => ({ title: deck.title, cards: deck.questions.length }))
   );
 
+  const toDeck = (title) => navigation.navigate('Cards', { deckName: title });
+
   return (
     <Container>
-      <CustomAppbar />
       <FlatList
         data={decks}
-        renderItem={({ item }) => <DecksItem deckName={item.title} cards={item.cards} />}
+        renderItem={({ item }) => (
+          <DecksItem deckName={item.title} cards={item.cards} navigate={toDeck} />
+        )}
         keyExtractor={(item) => item.title}
         style={styles.list}
         contentContainerStyle={styles.listContainer}
@@ -37,8 +39,8 @@ const styles = StyleSheet.create({
     elevation: 20,
   },
   list: {
-    marginTop: -16,
-    paddingTop: 16,
+    paddingTop: 8,
+    backgroundColor: 'white',
   },
   listContainer: { paddingBottom: 100 },
 });

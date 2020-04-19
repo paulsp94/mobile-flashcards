@@ -6,14 +6,13 @@ const RightContent = () => (
   <IconButton icon="dots-vertical" color="black" onPress={() => console.log('Pressed')} />
 );
 
-export const DecksItem = ({ deckName, cards }) => (
-  <Card style={styles.card}>
+export const DecksItem = ({ deckName, cards, navigate }) => (
+  <Card style={styles.card} onPress={() => navigate(deckName)}>
     <Card.Title
       title={deckName}
       subtitle={`${cards} ${cards === 1 ? 'Card' : 'Cards'}`}
       right={RightContent}
       rightStyle={styles.rightStyle}
-      style={styles.titleContent}
     />
   </Card>
 );
@@ -28,13 +27,9 @@ const styles = StyleSheet.create({
 
     elevation: 10,
   },
-  titleContent: {
-    paddingTop: 16,
-    paddingLeft: 24,
-  },
   rightStyle: {
     position: 'absolute',
-    top: 12,
-    right: 8,
+    top: 4,
+    right: 0,
   },
 });
