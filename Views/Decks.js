@@ -4,9 +4,9 @@ import { FAB, Portal } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { useIsFocused } from '@react-navigation/native';
 
-import { Container } from '../components/Container';
-import { DecksItem } from '../components/DecksItem';
-import { DecksModal } from '../components/DecksModal';
+import { Container } from '../components/general/Container';
+import { DecksItem } from '../components/decks/DecksItem';
+import { DecksModal } from '../components/decks/DecksModal';
 
 export const Decks = ({ navigation }) => {
   const [newDeckTitle, setNewDeckTitle] = useState('');

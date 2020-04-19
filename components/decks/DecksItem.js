@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Card, IconButton, Menu } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { removeDeckTitle } from '../actions';
+
+import { removeDeckTitle } from '../../actions';
 
 export const DecksItem = ({ deckName, cards, navigate, showModal }) => {
   const [visible, setVisible] = useState(false);

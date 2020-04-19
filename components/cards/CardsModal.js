@@ -1,30 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, Card, TextInput } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { addDeckTitle, editDeckTitle } from '../actions';
-import { ModalButton } from './ModalButton';
+import { addQuestion } from '../../actions';
+import { ModalButton } from '../general/ModalButton';
 
-export const DecksModal = ({ visible, hideModal, title, setTitle, editing }) => {
-  const deckNames = useSelector((state) =>
-    Object.values(state)
-      .slice(0, -1)
-      .map((deck) => deck.title)
-  );
+const ModalInput = ({ value, setValue, label }) => (
+  <TextInput
+    value={value}
+    onChangeText={setValue}
+    style={styles.input}
+    mode="outlined"
+    label={label}
+    theme={{
+      colors: {
+        primary: '#000',
+      },
+    }}
+  />
+);
+
+export const CardsModal = ({ visible, hideModal, deck }) => {
+  const [question, setQuestion] = useState('');
+  const [answer, setAnswer] = useState('');
   const dispatch = useDispatch();
 
   const handleCreate = () => {
-    if (!deckNames.includes(title) && title !== '') {
-      if (editing !== '') {
-        console.log(editing);
-        dispatch(editDeckTitle(editing, title));
-      } else {
-        console.log('creating');
-        dispatch(addDeckTitle(title));
-      }
+    if (question !== '' && answer !== '') {
+      dispatch(addQuestion(deck, { question, answer }));
       hideModal();
-      setTitle('');
+      setQuestion('');
+      setAnswer('');
     } else {
       // TODO: snackbar don't repeat title
     }
@@ -35,18 +42,8 @@ export const DecksModal = ({ visible, hideModal, title, setTitle, editing }) => 
       <Card style={styles.card}>
         <Card.Title title="Create New Deck" />
         <Card.Content>
-          <TextInput
-            value={title}
-            onChangeText={setTitle}
-            style={styles.input}
-            mode="outlined"
-            label="Deck Name"
-            theme={{
-              colors: {
-                primary: '#000',
-              },
-            }}
-          />
+          <ModalInput value={question} setValue={setQuestion} label="Question" />
+          <ModalInput value={answer} setValue={setAnswer} label="Answer" />
         </Card.Content>
         <Card.Actions style={styles.cardActions}>
           <ModalButton onPress={hideModal} mode="text">

@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 import { Portal, FAB } from 'react-native-paper';
 import { useIsFocused } from '@react-navigation/native';
 
-import { Container } from '../components/Container';
-import { CardsItem } from '../components/CardsItem';
-import { CardsModal } from '../components/CardsModal';
+import { Container } from '../components/general/Container';
+import { CardsItem } from '../components/cards/CardsItem';
+import { CardsModal } from '../components/cards/CardsModal';
 
 export const Cards = ({ navigation, route }) => {
   const [fabOpen, setFABOpen] = useState(false);
