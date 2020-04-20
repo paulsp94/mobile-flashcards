@@ -7,21 +7,51 @@ import { useIsFocused } from '@react-navigation/native';
 import { Container } from '../components/general/Container';
 import { CardsItem } from '../components/cards/CardsItem';
 import { CardsModal } from '../components/cards/CardsModal';
+import { ResultsModal } from '../components/quiz/ResultsModal';
 
 export const Cards = ({ navigation, route }) => {
   const [fabOpen, setFABOpen] = useState(false);
   const [visible, setVisible] = useState(false);
   const isFocused = useIsFocused();
-  const { deckName } = route.params;
+  const { deckName, maxQuestions, correct, quizFinished } = route.params;
   const questions = useSelector((state) => state[deckName].questions);
 
   const onStateChange = ({ open }) => setFABOpen(open);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const startQuiz = () => navigation.navigate('Quiz', { deckName });
+  const quitResults = () =>
+    navigation.navigate('Cards', { deckName, cards: questions.length, quizFinished: false });
+
+  const actions = [
+    ...(questions.length < 1
+      ? []
+      : [
+          {
+            icon: 'brain',
+            label: 'Start Quiz',
+            onPress: startQuiz,
+          },
+        ]),
+    {
+      icon: 'plus',
+      label: 'Add Card',
+      onPress: showModal,
+    },
+  ];
 
   return (
     <Container>
+      <Portal>
+        <ResultsModal
+          visible={isFocused && quizFinished}
+          deckName={deckName}
+          maxQuestions={maxQuestions}
+          correct={correct}
+          restart={startQuiz}
+          quitResults={quitResults}
+        />
+      </Portal>
       <FlatList
         data={questions}
         renderItem={({ item }) => <CardsItem question={item.question} />}
@@ -36,27 +66,11 @@ export const Cards = ({ navigation, route }) => {
         <FAB.Group
           open={fabOpen}
           icon={fabOpen ? 'close' : 'cards-outline'}
-          visible={isFocused}
+          visible={isFocused && !quizFinished}
           style={styles.fabGroup}
           fabStyle={styles.fab}
-          actions={[
-            {
-              icon: 'brain',
-              label: 'Start Quiz',
-              onPress: startQuiz,
-            },
-            {
-              icon: 'plus',
-              label: 'Add Card',
-              onPress: showModal,
-            },
-          ]}
+          actions={actions}
           onStateChange={onStateChange}
-          onPress={() => {
-            if (fabOpen) {
-              // do something if the speed dial is open
-            }
-          }}
         />
       </Portal>
     </Container>
