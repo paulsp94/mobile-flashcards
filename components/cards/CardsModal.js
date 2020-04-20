@@ -40,7 +40,7 @@ export const CardsModal = ({ visible, hideModal, deck }) => {
   return (
     <Modal visible={visible} onDismiss={hideModal}>
       <Card style={styles.card}>
-        <Card.Title title="Create New Deck" />
+        <Card.Title title="Create New Card" />
         <Card.Content>
           <ModalInput value={question} setValue={setQuestion} label="Question" />
           <ModalInput value={answer} setValue={setAnswer} label="Answer" />
