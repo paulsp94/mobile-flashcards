@@ -9,6 +9,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { theme } from './utils/theme';
 import { store, persistor } from './utils/configureStore';
 
+import { CardsTitle } from './components/cards/CardsTitle';
 import { Decks } from './Views/Decks';
 import { Cards } from './Views/Cards';
 import { Quiz } from './Views/Quiz';
@@ -28,14 +29,14 @@ export default class App extends Component {
                   name="Cards"
                   component={Cards}
                   options={({ route }) => ({
-                    title: `${route.params.deckName} (${route.params.cards})`,
+                    headerTitle: () => <CardsTitle route={route} />,
                   })}
                 />
                 <Stack.Screen
                   name="Quiz"
                   component={Quiz}
-                  options={({ route }) => ({
-                    title: `${route.params.deckName} Quiz`,
+                  options={() => ({
+                    headerShown: false,
                   })}
                 />
               </Stack.Navigator>
