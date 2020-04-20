@@ -10,24 +10,18 @@ import { DecksModal } from '../components/decks/DecksModal';
 
 export const Decks = ({ navigation }) => {
   const [newDeckTitle, setNewDeckTitle] = useState('');
-  const [editing, setEditing] = useState('');
   const [visible, setVisible] = useState(false);
   const isFocused = useIsFocused();
   const decks = useSelector((state) =>
     Object.values(state)
       .slice(0, -1)
-      .map((deck) => ({ title: deck.title, cards: deck.questions.length }))
+      .map((deck) => ({ title: deck.title, cards: deck.questions.length, uuid: deck.uuid }))
   );
 
   const toDeck = (title, cards) => navigation.navigate('Cards', { deckName: title, cards });
-  const showModal = ({ title = '' }) => {
-    setNewDeckTitle(title);
-    setEditing(title);
-    setVisible(true);
-  };
+  const showModal = () => setVisible(true);
   const hideModal = () => {
     setNewDeckTitle('');
-    setEditing('');
     setVisible(false);
   };
 
@@ -41,6 +35,7 @@ export const Decks = ({ navigation }) => {
             cards={item.cards}
             navigate={toDeck}
             showModal={showModal}
+            key={item.uuid}
           />
         )}
         keyExtractor={(item) => item.uuid}
@@ -49,10 +44,10 @@ export const Decks = ({ navigation }) => {
       />
       <Portal>
         <DecksModal
-          visible={visible}
+          visible={visible && isFocused}
           title={newDeckTitle}
           setTitle={setNewDeckTitle}
-          editing={editing}
+          toDeck={toDeck}
           hideModal={hideModal}
         />
         <FAB style={styles.fab} icon="plus" onPress={showModal} visible={isFocused} />
