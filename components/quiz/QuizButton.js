@@ -16,11 +16,6 @@ export const QuizButton = ({ children, onPress, icon, mode }) => (
 );
 
 const styles = StyleSheet.create({
-  busttonWrapper: {
-    flexDirection: 'row',
-    margin: 8,
-    flexShrink: 0,
-  },
   buttonContent: {
     height: 48,
   },
