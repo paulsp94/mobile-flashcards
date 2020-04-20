@@ -7,7 +7,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { Container } from '../components/general/Container';
 import { CardsItem } from '../components/cards/CardsItem';
 import { CardsModal } from '../components/cards/CardsModal';
-import { ResultsModal } from '../components/quiz/ResultsModal';
+import { ResultsModal } from '../components/cards/ResultsModal';
 
 export const Cards = ({ navigation, route }) => {
   const [fabOpen, setFABOpen] = useState(false);
