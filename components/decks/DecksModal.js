@@ -3,10 +3,10 @@ import { Modal, Card, TextInput } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { addDeckTitle, editDeckTitle } from '../../actions';
+import { addDeckTitle } from '../../actions';
 import { ModalButton } from '../general/ModalButton';
 
-export const DecksModal = ({ visible, hideModal, title, setTitle, editing }) => {
+export const DecksModal = ({ visible, hideModal, title, setTitle, toDeck }) => {
   const deckNames = useSelector((state) =>
     Object.values(state)
       .slice(0, -1)
@@ -16,15 +16,9 @@ export const DecksModal = ({ visible, hideModal, title, setTitle, editing }) => 
 
   const handleCreate = () => {
     if (!deckNames.includes(title) && title !== '') {
-      if (editing !== '') {
-        console.log(editing);
-        dispatch(editDeckTitle(editing, title));
-      } else {
-        console.log('creating');
-        dispatch(addDeckTitle(title));
-      }
+      dispatch(addDeckTitle(title));
+      toDeck(title, 0);
       hideModal();
-      setTitle('');
     } else {
       // TODO: snackbar don't repeat title
     }
