@@ -1,4 +1,4 @@
-import UUIDGenerator from 'react-native-uuid-generator';
+import uuid from 'react-native-uuid';
 
 import { ADD_DECK_TITLE, ADD_QUESTION, REMOVE_DECK_TITLE, EDIT_DECK_TITLE } from '../actions';
 
@@ -43,7 +43,7 @@ export default (state = initialState, action) => {
     case ADD_DECK_TITLE:
       return {
         ...state,
-        [action.title]: { title: action.title, uuid: UUIDGenerator.getRandomUUID(), questions: [] },
+        [action.title]: { title: action.title, uuid: uuid.v4(), questions: [] },
       };
     case EDIT_DECK_TITLE: {
       const newDeck = state;
@@ -57,10 +57,7 @@ export default (state = initialState, action) => {
         ...state,
         [action.deck]: {
           ...state[action.deck],
-          questions: [
-            ...state[action.deck].questions,
-            { ...action.question, uuid: UUIDGenerator.getRandomUUID() },
-          ],
+          questions: [...state[action.deck].questions, { ...action.question, uuid: uuid.v4() }],
         },
       };
     default:
