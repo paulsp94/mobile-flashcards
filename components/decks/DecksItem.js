@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, IconButton, Menu, Title } from 'react-native-paper';
+import { Card, IconButton, Menu } from 'react-native-paper';
 import { StyleSheet, Text, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
   },
   menu: {
     marginTop: -2,
+    marginRight: -8,
     flexShrink: 0,
   },
 });
