@@ -5,7 +5,6 @@ export const EDIT_DECK_TITLE = 'EDIT_DECK_TITLE';
 export const REMOVE_DECK_TITLE = 'REMOVE_DECK_TITLE';
 export const ADD_QUESTION = 'ADD_QUESTION';
 export const REMOVE_QUESTION = 'REMOVE_QUESTION';
-export const QUIZ_FINISHED = 'QUIZ_FINISHED';
 
 export const getDecks = () => ({
   type: GET_DECKS,
@@ -42,9 +41,4 @@ export const removeQuestion = (deckName, question) => ({
   type: REMOVE_QUESTION,
   deckName,
   question,
-});
-
-export const setQuizFinished = (timestamp) => ({
-  type: QUIZ_FINISHED,
-  timestamp,
 });
