@@ -8,6 +8,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import { theme } from './utils/theme';
 import { store, persistor } from './utils/configureStore';
+import { setLocalNotification } from './utils/notifications';
 
 import { CardsTitle } from './components/cards/CardsTitle';
 import { Decks } from './Views/Decks';
@@ -17,6 +18,10 @@ import { Quiz } from './Views/Quiz';
 const Stack = createStackNavigator();
 
 export default class App extends Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
+
   render() {
     return (
       <StoreProvider store={store}>

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Portal, FAB } from 'react-native-paper';
 import { useIsFocused } from '@react-navigation/native';
 
-import { setQuizFinished } from '../actions';
+import { clearLocalNotification, setLocalNotification } from '../utils/notifications';
 import { Container } from '../components/general/Container';
 import { CardsItem } from '../components/cards/CardsItem';
 import { CardsModal } from '../components/cards/CardsModal';
@@ -16,9 +16,8 @@ export const Cards = ({ navigation, route }) => {
   const isFocused = useIsFocused();
   const { deckName, maxQuestions, correct, quizFinished } = route.params;
   const questions = useSelector((state) => state.decks[deckName].questions);
-  const dispatch = useDispatch();
   if (quizFinished) {
-    dispatch(setQuizFinished(Date.now()));
+    clearLocalNotification().then(setLocalNotification);
   }
 
   const onStateChange = ({ open }) => setFABOpen(open);
