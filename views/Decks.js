@@ -21,8 +21,8 @@ export const Decks = ({ navigation }) => {
   const toDeck = (title, cards) => navigation.navigate('Cards', { deckName: title, cards });
   const showModal = () => setVisible(true);
   const hideModal = () => {
-    setNewDeckTitle('');
     setVisible(false);
+    setNewDeckTitle('');
   };
 
   return (
@@ -44,7 +44,7 @@ export const Decks = ({ navigation }) => {
           toDeck={toDeck}
           hideModal={hideModal}
         />
-        <FAB style={styles.fab} icon="plus" onPress={showModal} visible={isFocused} />
+        <FAB style={styles.fab} icon="plus" onPress={showModal} visible={isFocused && !visible} />
       </Portal>
     </Container>
   );

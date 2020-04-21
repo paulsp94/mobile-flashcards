@@ -70,7 +70,7 @@ export const Cards = ({ navigation, route }) => {
         <FAB.Group
           open={fabOpen}
           icon={fabOpen ? 'close' : 'cards-outline'}
-          visible={isFocused && !quizFinished}
+          visible={isFocused && !quizFinished && !visible}
           style={styles.fabGroup}
           fabStyle={styles.fab}
           actions={actions}
