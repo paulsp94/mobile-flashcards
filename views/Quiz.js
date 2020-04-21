@@ -53,12 +53,16 @@ export const Quiz = ({ navigation, route }) => {
           {isFlipped ? 'View Question' : 'View Answer'}
         </QuizButton>
       </View>
-      <QuizFlipCard
-        flipCard={flipCard}
-        currentQuestion={currentQuestion}
-        maxQuestions={maxQuestions}
-        questions={questions}
-      />
+      {currentQuestion < maxQuestions ? (
+        <QuizFlipCard
+          flipCard={flipCard}
+          currentQuestion={currentQuestion}
+          maxQuestions={maxQuestions}
+          questions={questions}
+        />
+      ) : (
+        <View style={styles.placeholder} />
+      )}
       <View style={styles.buttonWrapper}>
         <QuizButton mode="contained" icon="close" onPress={handleIncorrect}>
           Incorrect
@@ -72,6 +76,9 @@ export const Quiz = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+  placeholder: {
+    flex: 1,
+  },
   statusBar: { height: Constants.statusBarHeight },
   buttonWrapper: {
     flexDirection: 'row',
