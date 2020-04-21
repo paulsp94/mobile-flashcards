@@ -7,11 +7,7 @@ import { addDeckTitle } from '../../actions';
 import { ModalButton } from '../general/ModalButton';
 
 export const DecksModal = ({ visible, hideModal, title, setTitle, toDeck }) => {
-  const deckNames = useSelector((state) =>
-    Object.values(state)
-      .slice(0, -1)
-      .map((deck) => deck.title)
-  );
+  const deckNames = useSelector((state) => Object.values(state.decks).map((deck) => deck.title));
   const dispatch = useDispatch();
 
   const handleCreate = () => {

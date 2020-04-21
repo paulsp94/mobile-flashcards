@@ -13,7 +13,7 @@ export const Decks = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
   const isFocused = useIsFocused();
   const decks = useSelector((state) =>
-    Object.values(state)
+    Object.values(state.decks)
       .slice(0, -1)
       .map((deck) => ({ title: deck.title, cards: deck.questions.length, uuid: deck.uuid }))
   );
