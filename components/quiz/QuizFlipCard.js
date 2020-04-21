@@ -10,7 +10,7 @@ export const QuizFlipCard = ({ flipCard, currentQuestion, maxQuestions, question
       <Card.Content style={{ flex: 1 }}>
         <View style={styles.captionWrapper}>
           <Caption>Question —</Caption>
-          <Caption>{`${currentQuestion}/${maxQuestions}`}</Caption>
+          <Caption>{`${currentQuestion + 1}/${maxQuestions}`}</Caption>
         </View>
         {currentQuestion < maxQuestions && (
           <View style={{ flex: 1 }}>
@@ -24,9 +24,9 @@ export const QuizFlipCard = ({ flipCard, currentQuestion, maxQuestions, question
       </Card.Content>
     </Card>
     <Card style={styles.card}>
-      <Card.Content>
+      <Card.Content style={{ flex: 1 }}>
         <View style={styles.captionWrapper}>
-          <Caption>{`${currentQuestion}/${maxQuestions}`}</Caption>
+          <Caption>{`${currentQuestion + 1}/${maxQuestions}`}</Caption>
           <Caption>— Answer</Caption>
         </View>
         {currentQuestion < maxQuestions && (
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     paddingTop: 16,
   },
   answerText: {
-    alignSelf: 'flex-end',
+    textAlign: 'right',
     fontSize: 48,
   },
   questionText: {
