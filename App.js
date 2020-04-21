@@ -11,9 +11,9 @@ import { store, persistor } from './utils/configureStore';
 import { setLocalNotification } from './utils/notifications';
 
 import { CardsTitle } from './components/cards/CardsTitle';
-import { Decks } from './Views/Decks';
-import { Cards } from './Views/Cards';
-import { Quiz } from './Views/Quiz';
+import { Decks } from './views/Decks';
+import { Cards } from './views/Cards';
+import { Quiz } from './views/Quiz';
 
 const Stack = createStackNavigator();
 
