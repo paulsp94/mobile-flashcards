@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Card, IconButton, Menu } from 'react-native-paper';
-import { StyleSheet } from 'react-native';
+import { Card, IconButton, Menu, Title } from 'react-native-paper';
+import { StyleSheet, Text, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import { removeDeckTitle } from '../../actions';
 
-export const DecksItem = ({ deckName, cards, navigate, showModal }) => {
+export const DecksItem = ({ deckName, cards, navigate }) => {
   const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
 
@@ -13,24 +13,27 @@ export const DecksItem = ({ deckName, cards, navigate, showModal }) => {
   const closeMenu = () => setVisible(false);
 
   const toggleDelete = () => dispatch(removeDeckTitle(deckName));
-  // const toggleEdit = () => showModal({ title: deckName });
 
   return (
     <Card style={styles.card} onPress={() => navigate(deckName, cards)}>
-      <Card.Title
-        title={deckName}
-        subtitle={`${cards} ${cards === 1 ? 'Card' : 'Cards'}`}
-        right={() => (
-          <Menu
-            visible={visible}
-            onDismiss={closeMenu}
-            anchor={<IconButton icon="dots-vertical" color="black" onPress={openMenu} />}>
-            {/* <Menu.Item onPress={toggleEdit} title="Edit" /> */}
-            <Menu.Item onPress={toggleDelete} title="Delete" />
-          </Menu>
-        )}
-        rightStyle={styles.rightStyle}
-      />
+      <Card.Content style={styles.cardContent}>
+        <View style={styles.textWrapper}>
+          <Text numberOfLines={1} style={styles.title}>
+            {deckName}
+          </Text>
+          <Text numberOfLines={1} style={styles.subtitle}>
+            {`${cards} ${cards === 1 ? 'Card' : 'Cards'}`}
+          </Text>
+        </View>
+        <Menu
+          visible={visible}
+          onDismiss={closeMenu}
+          anchor={
+            <IconButton icon="dots-vertical" color="black" onPress={openMenu} style={styles.menu} />
+          }>
+          <Menu.Item onPress={toggleDelete} title="Delete" />
+        </Menu>
+      </Card.Content>
     </Card>
   );
 };
@@ -45,9 +48,27 @@ const styles = StyleSheet.create({
 
     elevation: 10,
   },
-  rightStyle: {
-    position: 'absolute',
-    top: 4,
-    right: 4,
+  cardContent: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  textWrapper: {
+    flex: 1,
+    flexGrow: 1,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    lineHeight: 32,
+    paddingRight: 8,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#BDBDBD',
+    lineHeight: 24,
+  },
+  menu: {
+    marginTop: -2,
+    flexShrink: 0,
   },
 });
