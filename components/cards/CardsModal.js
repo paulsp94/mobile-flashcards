@@ -6,13 +6,11 @@ import { useDispatch } from 'react-redux';
 import { addQuestion } from '../../actions';
 import { ModalButton } from '../general/ModalButton';
 
-const ModalInput = ({ value, setValue, label }) => (
+const ModalInput = (props) => (
   <TextInput
-    value={value}
-    onChangeText={setValue}
+    {...props}
     style={styles.input}
     mode="outlined"
-    label={label}
     theme={{
       colors: {
         primary: '#000',
@@ -24,29 +22,47 @@ const ModalInput = ({ value, setValue, label }) => (
 export const CardsModal = ({ visible, hideModal, deck }) => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
+  const [errorQuestion, setErrorQuestion] = useState(false);
+  const [errorAnswer, setErrorAnswer] = useState(false);
   const dispatch = useDispatch();
+
+  const reset = () => {
+    setQuestion('');
+    setAnswer('');
+    setErrorAnswer(false);
+    setErrorQuestion(false);
+  };
 
   const handleCreate = () => {
     if (question !== '' && answer !== '') {
       dispatch(addQuestion(deck, { question, answer }));
       hideModal();
-      setQuestion('');
-      setAnswer('');
-    } else {
-      // TODO: snackbar don't repeat title
+      reset();
     }
+    setErrorQuestion(question === '');
+    setErrorAnswer(answer === '');
+  };
+
+  const handleHideModal = () => {
+    reset();
+    hideModal();
   };
 
   return (
-    <Modal visible={visible} onDismiss={hideModal}>
+    <Modal visible={visible} dismissable={false}>
       <Card style={styles.card}>
         <Card.Title title="Create New Card" />
         <Card.Content>
-          <ModalInput value={question} setValue={setQuestion} label="Question" />
-          <ModalInput value={answer} setValue={setAnswer} label="Answer" />
+          <ModalInput
+            value={question}
+            onChangeText={setQuestion}
+            label="Question"
+            error={errorQuestion}
+          />
+          <ModalInput value={answer} onChangeText={setAnswer} label="Answer" error={errorAnswer} />
         </Card.Content>
         <Card.Actions style={styles.cardActions}>
-          <ModalButton onPress={hideModal} mode="text">
+          <ModalButton onPress={handleHideModal} mode="text">
             Cancel
           </ModalButton>
           <ModalButton onPress={handleCreate} mode="contained">
@@ -68,4 +84,7 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   cardActions: { justifyContent: 'flex-end', padding: 16 },
+  input: {
+    marginBottom: 4,
+  },
 });
