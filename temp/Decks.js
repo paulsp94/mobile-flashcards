@@ -30,13 +30,7 @@ export const Decks = ({ navigation }) => {
       <FlatList
         data={decks}
         renderItem={({ item }) => (
-          <DecksItem
-            deckName={item.title}
-            cards={item.cards}
-            navigate={toDeck}
-            showModal={showModal}
-            key={item.uuid}
-          />
+          <DecksItem deckName={item.title} cards={item.cards} navigate={toDeck} key={item.uuid} />
         )}
         keyExtractor={(item) => item.uuid}
         style={styles.list}
