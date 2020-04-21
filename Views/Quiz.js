@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import Constants from 'expo-constants';
 
@@ -41,7 +41,12 @@ export const Quiz = ({ navigation, route }) => {
     <Container>
       <View style={styles.statusBar} />
       <View style={styles.buttonWrapper}>
-        <QuizButton mode="text" icon="door-open" onPress={() => navigation.goBack()}>
+        <QuizButton
+          mode="text"
+          icon="door-open"
+          onPress={() =>
+            navigation.navigate('Cards', { deckName, cards: questions.length, quizFinished: false })
+          }>
           Quit Quiz
         </QuizButton>
         <QuizButton mode="text" icon="sync" onPress={handleFlip}>
